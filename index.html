@@ -20,12 +20,12 @@
     <div class="card">
         <h2>Instagram DM Tester</h2>
         
-        <label for="recipientId">Recipient PSID / User ID:</label>
-        <!-- Yahan apni nayi nikaali hui numeric PSID paste kar dena -->
-        <input type="text" id="recipientId" placeholder="Apni numeric PSID yahan daalein">
+        <label for="recipientId">Recipient ID / Selected Item ID:</label>
+        <!-- URL se nikali gayi ID yahan automatically set hai -->
+        <input type="text" id="recipientId" value="340282366841710301244259583382315021547">
 
         <label for="messageText">Message:</label>
-        <textarea id="messageText" rows="3" placeholder="Apna message yahan likhein..."></textarea>
+        <textarea id="messageText" rows="3" placeholder="Apna message yahan likhein...">Hello! Yeh automated test message hai.</textarea>
 
         <button onclick="sendMessage()">Message Bhejein</button>
 
@@ -33,7 +33,6 @@
     </div>
 
     <script>
-        // Aapka naya access token aur Instagram Business ID configured hai
         const ACCESS_TOKEN = "EAAPocVdyuhcBSrnz5cIICwXQ8KmymfaXomneIqAx3MZCx0LT0lQEseZCuSMBmqRMIJJeTa7ylhrXwaWSlQB22bvkXSstUpVXWEM7L4J3xWVZCkkwBStkNEmjgqRCGhhi4oahqFW18a7ZC7Nh912ZBUFyMoIDjuOUpk9yF7jA8qEZAmKzftlBxGAZCtfWXvPN1QZBsxU2qHvZAeqhYzCIV1nWWbwlcbfBbld1Hhgeiu76KW8oAlBx6hrOExoDGQNacZBMuU5l6VBPiAQtXRJ4ewsbEKZBGRd";
         const IG_PAGE_ID = "17841422775979369";
 
