@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Instagram DM Tester</title>
+    <style>
+        body { font-family: Arial, sans-serif; background: #f0f2f5; display: flex; justify-content: center; align-items: center; height: 100vh; margin: 0; }
+        .card { background: white; padding: 20px; border-radius: 12px; box-shadow: 0 4px 12px rgba(0,0,0,0.1); width: 100%; max-width: 400px; }
+        h2 { text-align: center; color: #333; }
+        label { font-size: 14px; color: #666; display: block; margin-top: 10px; }
+        input, textarea { width: 100%; padding: 10px; margin-top: 5px; border: 1px solid #ccc; border-radius: 6px; box-sizing: border-box; }
+        button { background: #0095f6; color: white; border: none; padding: 12px; width: 100%; border-radius: 6px; margin-top: 15px; font-size: 16px; cursor: pointer; }
+        button:hover { background: #0081d6; }
+        #response { margin-top: 15px; font-size: 14px; text-align: center; word-break: break-all; }
+    </style>
+</head>
+<body>
+
+    <div class="card">
+        <h2>Instagram DM Tester</h2>
+        
+        <label for="recipientId">Recipient PSID / User ID:</label>
+        <input type="text" id="recipientId" placeholder="Jise message bhejna hai uska ID">
+
+        <label for="messageText">Message:</label>
+        <textarea id="messageText" rows="3" placeholder="Apna message yahan likhein..."></textarea>
+
+        <button onclick="sendMessage()">Message Bhejein</button>
+
+        <div id="response"></div>
+    </div>
+
+    <script>
+        // Aapka naya token aur Instagram Business ID automatic set hai
+        const ACCESS_TOKEN = "EAAPocVdyuhcBSmc3syAM0jn5niyZCZAbZC9Sc4unmuLbqFyrVfFyASwSgHOaBDMZBHiM9yIg3QweiFgKhMPDfFHsMf0awiu3VnKwEiY2tWDGsreMIjCxG1LtfoqMlEybECkWTZBubir6zcBO7bqd22TaEGxUul888QOEaYF8ZAyB4RsEcZBvdZCl32ANV0Pe83hTMZAQ5QDKSBdLXkCgodFYbZABcBaH1yHDBcmjj17P8K2vFN19pxHFthg46hkJWF6FzZCzuIdVNLqUaLvZBfqkmuwYOdZAx";
+        const IG_PAGE_ID = "17841422775979369";
+
+        async function sendMessage() {
+            const recipientId = document.getElementById('recipientId').value.trim();
+            const messageText = document.getElementById('messageText').value.trim();
+            const responseDiv = document.getElementById('response');
+
+            if (!recipientId || !messageText) {
+                responseDiv.style.color = "red";
+                responseDiv.innerText = "Kripya recipient ID aur message dono bharein!";
+                return;
+            }
+
+            responseDiv.style.color = "#333";
+            responseDiv.innerText = "Message bheja ja raha hai...";
+
+            const url = `https://graph.facebook.com/v26.0/${IG_PAGE_ID}/messages`;
+
+            try {
+                const res = await fetch(url, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        recipient: { id: recipientId },
+                        message: { text: messageText },
+                        access_token: ACCESS_TOKEN
+                    })
+                });
+
+                const data = await res.json();
+
+                if (res.ok) {
+                    responseDiv.style.color = "green";
+                    responseDiv.innerText = "Message safaltapurvak bhej diya gaya hai! 🎉";
+                } else {
+                    responseDiv.style.color = "red";
+                    responseDiv.innerText = "Error: " + (data.error?.message || JSON.stringify(data));
+                }
+            } catch (err) {
+                responseDiv.style.color = "red";
+                responseDiv.innerText = "Network Error: " + err.message;
+            }
+        }
+    </script>
+
+</body>
+</html>
